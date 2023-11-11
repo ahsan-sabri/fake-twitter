@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * @method static create(array $array)
+ */
 class User extends Authenticatable implements JWTSubject
 {
 
