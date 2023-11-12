@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @method static create(array $array)
+ * @method static where(string $string, string $username)
  */
 class User extends Authenticatable implements JWTSubject
 {
