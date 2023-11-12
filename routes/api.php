@@ -37,5 +37,6 @@ Route::group(['as' => 'api.', 'middleware' => ['auth:api']], static function () 
 
     // tweet
     Route::resource('tweets', TweetController::class);
+    Route::post('tweet/update', [TweetController::class, 'updateTweet'])->name('tweet.update');
     Route::get('tweet/timeline', [TweetController::class, 'timeline'])->name('timeline');
 });

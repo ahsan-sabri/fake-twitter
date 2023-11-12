@@ -28,6 +28,13 @@ class TweetService
     }
 
     public function getTweetDetails($tweet) {
-        return $tweet->load('tweeter:id,name,username');
+        $image = null;
+        $tweet->load('tweeter:id,name,username');
+        if ($tweet->images()->count() > 0) {
+            $image = config('constant.app_url') . $tweet->images()->first()->url;
+        }
+        $tweet->setAttribute('image', $image);
+
+        return $tweet;
     }
 }

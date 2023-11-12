@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         try {
             $image['file'] = $request->file('image');
-            $image['path'] = '/img/';
+            $image['path'] = '/img/profile/';
             $image['id'] = auth()->id();
             $image['model'] = User::class;
             $this->profileService->updateAvatar($image);

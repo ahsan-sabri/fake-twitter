@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /**
  * @method static create($data)
  * @method static whereIn(string $string, array $timelineTweeters)
+ * @method static find(mixed $id)
+ * @property mixed $id
  */
 class Tweet extends Model
 {

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTweetRequest;
+use App\Http\Requests\UpdateTweetRequest;
 use App\Models\Tweet;
+use App\Services\GlobalService;
 use App\Services\TweetService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -70,6 +72,16 @@ class TweetController extends Controller
             $req['user_id'] = auth()->id();
             $tweet = $this->tweetService->storeTweet($req);
 
+            if ($request->file('image')) {
+                $image['file'] = $request->file('image');
+                $image['path'] = '/img/tweet/';
+                $image['id'] = $tweet->id;
+                $image['model'] = Tweet::class;
+
+                $globalService = new GlobalService();
+                $globalService->processUploadedImage($image);
+            }
+
             DB::commit();
             return response()->json([
                 'success' => true,
@@ -110,12 +122,30 @@ class TweetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTweetRequest $request, Tweet $tweet): JsonResponse
+    public function updateTweet(UpdateTweetRequest $request): JsonResponse
     {
         DB::beginTransaction();
         try {
             $req = $request->validated();
+            $tweet = Tweet::find($request['id']);
+            // update tweet
             $tweet->update($req);
+            // upload image if tweet has image
+            if ($request->file('image')) {
+                // remove old image
+                if ($tweet->images()->count() > 0) {
+                    unlink(public_path() . $tweet->images()->first()->url);
+                    $tweet->images()->first()->delete();
+                }
+                // insert new image
+                $image['file'] = $request->file('image');
+                $image['path'] = '/img/tweet/';
+                $image['id'] = $tweet->id;
+                $image['model'] = Tweet::class;
+
+                $globalService = new GlobalService();
+                $globalService->processUploadedImage($image);
+            }
 
             DB::commit();
             return response()->json([
