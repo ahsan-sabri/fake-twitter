@@ -28,13 +28,13 @@ class AuthService
 
     public function respondWithToken($token): JsonResponse
     {
-        $expiration = 5 * 24 * 60; // 5 days in minutes
+        $expiration = 24 * 60 * 60; // 24 hours in seconds
 
         return response()->json([
             'success' => true,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => now()->addMinutes($expiration)->timestamp,
+            'expires_in' => $expiration,
             'user' => auth()->user(),
         ]);
     }

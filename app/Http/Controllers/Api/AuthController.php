@@ -71,7 +71,7 @@ class AuthController extends Controller
     public function refresh(): JsonResponse
     {
         try {
-            $newToken = auth()->refresh();
+            $newToken = JWTAuth::parseToken()->refresh();
         } catch (JWTException $e) {
             return response()->json([
                 'success' => false,
