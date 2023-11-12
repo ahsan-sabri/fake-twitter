@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchUserRequest;
 use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
@@ -67,6 +68,26 @@ class UserController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Avatar updated successfully!'
+            ])->setStatusCode(ResponseAlias::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'issue' => $e->getMessage(),
+                'message' => 'Something went wrong!'
+            ])->setStatusCode(ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function searchUsers(SearchUserRequest $request): JsonResponse
+    {
+        try {
+            $req = $request->validated();
+            $users = $this->profileService->searchUsers($req['query_string']);
+
+            return response()->json([
+                'success' => true,
+                'data' => $users,
+                'message' => 'Users fetched successfully!'
             ])->setStatusCode(ResponseAlias::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([

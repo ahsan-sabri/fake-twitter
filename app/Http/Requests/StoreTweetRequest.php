@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreTweetRequest extends FormRequest
 {
@@ -13,6 +11,14 @@ class StoreTweetRequest extends FormRequest
         return [
             'tweet_text' => 'required|string|max:280',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'image.max' => 'The image may not be greater than 25 MegaBytes.',
+            'image.mimes' => 'The image must be of type jpeg,png,jpg,gif or svg.'
         ];
     }
 }

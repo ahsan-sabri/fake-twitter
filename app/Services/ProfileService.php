@@ -15,6 +15,11 @@ class ProfileService
         return $user;
     }
 
+    public function searchUsers(string $queryString)
+    {
+        return $queryString;
+    }
+
     public function getUserAvatar($userId): string
     {
         $avatar = '/img/profile/avatar.jpg';
