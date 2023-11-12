@@ -22,4 +22,5 @@ Route::group(['as' => 'api.'], static function () {
 
 Route::group(['as' => 'api.', 'middleware' => ['auth:api']], static function () {
     Route::get('user', [AuthController::class, 'getAuthUser'])->name('user');
+    Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
 });

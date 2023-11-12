@@ -67,4 +67,19 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
+
+    public function refresh(): JsonResponse
+    {
+        try {
+            $newToken = auth()->refresh();
+        } catch (JWTException $e) {
+            return response()->json([
+                'success' => false,
+                'issue' => $e->getMessage(),
+                'message' => "Couldn't refresh token!",
+            ])->setStatusCode(ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->authService->respondWithToken($newToken);
+    }
 }
