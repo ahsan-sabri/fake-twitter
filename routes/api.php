@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\FollowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,11 @@ Route::group(['as' => 'api.'], static function () {
 });
 
 Route::group(['as' => 'api.', 'middleware' => ['auth:api']], static function () {
+    // user
     Route::get('user', [AuthController::class, 'getAuthUser'])->name('user');
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
+
+    // follow
+    Route::post('follow', [FollowController::class, 'follow'])->name('follow');
+    Route::post('unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
 });

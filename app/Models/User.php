@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @method static create(array $array)
  * @method static where(string $string, string $username)
+ * @method static find(int|string|null $auth_id)
+ * @method static whereIn(string $string, mixed[] $toArray)
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -55,5 +58,18 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    // relations
+    public function followers()
+    {
+        $follows = $this->hasMany(Follow::class, 'follow_to');
+        return User::whereIn('id', $follows->pluck('follow_from')->all())->get();
+    }
+
+    public function following()
+    {
+        $follows = $this->hasMany(Follow::class, 'follow_from');
+        return User::whereIn('id', $follows->pluck('follow_to')->all())->get();
     }
 }

@@ -19,7 +19,7 @@ class AuthService
     public function generateUniqueUsername(string $email): string
     {
         $emailStr = explode('@', $email)[0];
-        $username = $emailStr . rand(1, 9);
+        $username = $emailStr . rand(100, 999);
         $checkUsernameExists = User::where('username', $username)->exists();
         if ($checkUsernameExists) {
             $username = $this->generateUniqueUsername($email);
