@@ -17,7 +17,7 @@ class ProfileService
 
     public function getUserAvatar($userId): string
     {
-        $avatar = '/img/avatar.jpg';
+        $avatar = '/img/profile/avatar.jpg';
         $user = User::find($userId);
         if ($user->images()->count() > 0) {
             $avatar = $user->images->first()->url;
