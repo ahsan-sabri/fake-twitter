@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\TweetController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,10 @@ Route::group(['as' => 'api.'], static function () {
 Route::group(['as' => 'api.', 'middleware' => ['auth:api']], static function () {
     // user
     Route::get('user', [AuthController::class, 'getAuthUser'])->name('user');
+    Route::get('profile/{id}', [UserController::class, 'getUserProfile'])->name('profile');
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
+    Route::post('profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::post('avatar/update', [UserController::class, 'updateAvatar'])->name('avatar.update');
 
     // follow
     Route::post('follow', [FollowController::class, 'follow'])->name('follow');

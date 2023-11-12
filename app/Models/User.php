@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Services\ProfileService;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -11,6 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static where(string $string, string $username)
  * @method static find(int|string|null $auth_id)
  * @method static whereIn(string $string, mixed[] $toArray)
+ * @property mixed $id
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -26,7 +29,6 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'date_of_birth',
         'gender',
-        'avatar',
         'email_verified_at',
         'password',
     ];
@@ -39,6 +41,10 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $appends = [
+        'avatar',
     ];
 
     /**
@@ -76,6 +82,17 @@ class User extends Authenticatable implements JWTSubject
 
     public function tweets(): HasMany
     {
-        return $this->hasMany(Tweet::class)->orderBy('created_at', 'desc');
+        return $this->hasMany(Tweet::class);
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function getAvatarAttribute(): string
+    {
+        $profileService = new ProfileService();
+        return $profileService->getUserAvatar($this->id);
     }
 }

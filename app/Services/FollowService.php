@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Follow;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 
 class FollowService
 {

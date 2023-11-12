@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Follow;
 use App\Models\Tweet;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 
 class TweetService
 {
@@ -22,7 +19,6 @@ class TweetService
         $timelineTweeters = array_merge($timelineTweeters, $followingIds);
 
         return Tweet::whereIn('user_id', $timelineTweeters)
-                    ->orderBy('created_at', 'desc')
                     ->with(['tweeter:id,name,username'])
                     ->paginate(20);
     }
