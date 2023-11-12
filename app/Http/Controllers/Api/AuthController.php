@@ -30,7 +30,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Registration successful!'
-            ]);
+            ])->setStatusCode(ResponseAlias::HTTP_CREATED);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -53,7 +53,7 @@ class AuthController extends Controller
                 ])->setStatusCode(ResponseAlias::HTTP_UNAUTHORIZED);
             }
 
-            return $this->authService->respondWithToken($token);
+            return $this->authService->respondWithToken($token)->setStatusCode(ResponseAlias::HTTP_OK);
         } catch (JWTException $e) {
             return response()->json([
                 'success' => false,
@@ -80,6 +80,6 @@ class AuthController extends Controller
             ])->setStatusCode(ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->authService->respondWithToken($newToken);
+        return $this->authService->respondWithToken($newToken)->setStatusCode(ResponseAlias::HTTP_OK);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FollowController;
+use App\Http\Controllers\Api\TweetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +30,8 @@ Route::group(['as' => 'api.', 'middleware' => ['auth:api']], static function () 
     // follow
     Route::post('follow', [FollowController::class, 'follow'])->name('follow');
     Route::post('unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
+
+    // tweet
+    Route::resource('tweets', TweetController::class);
+    Route::get('tweet/timeline', [TweetController::class, 'timeline'])->name('timeline');
 });

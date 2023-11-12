@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FollowRequest;
 use App\Http\Requests\UnfollowRequest;
 use App\Services\FollowService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -16,7 +17,7 @@ class FollowController extends Controller
         //
     }
 
-    public function follow(FollowRequest $request)
+    public function follow(FollowRequest $request): JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -27,7 +28,7 @@ class FollowController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Follow action successful!'
-            ]);
+            ])->setStatusCode(ResponseAlias::HTTP_OK);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -39,7 +40,7 @@ class FollowController extends Controller
 
     }
 
-    public function unfollow(UnfollowRequest $request)
+    public function unfollow(UnfollowRequest $request): JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -50,7 +51,7 @@ class FollowController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Unfollow action successful!'
-            ]);
+            ])->setStatusCode(ResponseAlias::HTTP_OK);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([

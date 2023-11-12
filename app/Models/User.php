@@ -26,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'date_of_birth',
         'gender',
+        'avatar',
         'email_verified_at',
         'password',
     ];
@@ -71,5 +72,10 @@ class User extends Authenticatable implements JWTSubject
     {
         $follows = $this->hasMany(Follow::class, 'follow_from');
         return User::whereIn('id', $follows->pluck('follow_to')->all())->get();
+    }
+
+    public function tweets(): HasMany
+    {
+        return $this->hasMany(Tweet::class)->orderBy('created_at', 'desc');
     }
 }
