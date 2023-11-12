@@ -13,6 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static where(string $string, string $username)
  * @method static find(int|string|null $auth_id)
  * @method static whereIn(string $string, mixed[] $toArray)
+ * @method static select(string $string)
  * @property mixed $id
  */
 class User extends Authenticatable implements JWTSubject

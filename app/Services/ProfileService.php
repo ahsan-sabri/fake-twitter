@@ -17,7 +17,13 @@ class ProfileService
 
     public function searchUsers(string $queryString)
     {
-        return $queryString;
+        return User::select('id', 'name', 'email', 'username')
+                ->where(function ($query) use($queryString) {
+                $query->where('name', 'like', "%{$queryString}%")
+                    ->orWhere('email', 'like', "%{$queryString}%")
+                    ->orWhere('username', 'like', "%{$queryString}%");
+                    })
+                ->where('id', '!=', auth()->id())->paginate(20);
     }
 
     public function getUserAvatar($userId): string
