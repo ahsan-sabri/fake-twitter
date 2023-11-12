@@ -10,11 +10,8 @@ class AuthService
 {
     public function registerUser($data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $data['password'] = Hash::make($data['password']);
+        return User::create($data);
     }
 
     public function respondWithToken($token): JsonResponse
