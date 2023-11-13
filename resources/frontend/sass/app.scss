@@ -1,0 +1,59 @@
+$brand-primary: #9c27b0;
+$bootstrap-blue: #2196f3;
+
+// Custom colors
+$color-azure: #2CA8FF;
+$color-green: #18ce0f;
+$color-orange: #f96332;
+$color-yellow: #FFB236;
+$color-purple: #9368E9;
+$color-rose: #e91e63;
+
+// Text and link colors
+.text-azure {
+    color: $color-azure !important;
+}
+.text-green {
+    color: $color-green !important;
+}
+.text-orange {
+    color: $color-orange !important;
+}
+.text-yellow {
+    color: $color-yellow !important;
+}
+.text-purple {
+    color: $color-purple !important;
+}
+.text-rose {
+    color: $color-rose !important;
+}
+
+a.text-azure:hover {
+    color: #008ef2 !important;
+}
+
+a.text-green:hover {
+    color: #13a60c !important;
+}
+
+a.text-orange:hover {
+    color: #eb3f06 !important;
+}
+
+a.text-yellow:hover {
+    color: #fa9a00 !important;
+}
+
+a.text-purple:hover {
+    color: #6b30e0 !important;
+}
+
+a.text-rose:hover {
+    color: #c2124e !important;
+}
+
+// custom
+.cursor-pointer {
+    cursor: pointer;
+}

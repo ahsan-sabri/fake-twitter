@@ -1,8 +1,16 @@
-const mix = require('laravel-mix');
+const mix = require('laravel-mix')
 
-mix.js('resources/frontend/js/main.js', 'public/js')
-    .sass('resources/frontend/sass/app.scss', 'public/css');
-    // .setVue2(); // Specify that you are using Vue 2
+mix.webpackConfig({
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '@': __dirname + '/resources/frontend',
+            '@components': __dirname + '/resources/frontend/components',
+        }
+    }
+})
+
+mix.js('resources/frontend/main.js', 'public/js')
 
 if (mix.inProduction()) {
     mix.version();
