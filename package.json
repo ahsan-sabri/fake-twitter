@@ -1,13 +1,12 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
-    }
+  "devDependencies": {
+    "vue": "^2.5.2",
+    "vue-router": "^3.3.4",
+    "vue-template-compiler": "^2.6.10",
+    "vuex": "^3.5.1",
+    "laravel-mix": "^6.0.49",
+    "sass": "^1.28.0",
+    "sass-loader": "^8.0.0",
+    "axios": "^1.1.2"
+  }
 }
